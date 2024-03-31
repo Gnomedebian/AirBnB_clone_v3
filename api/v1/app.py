@@ -23,7 +23,8 @@ def close_db(error):
 @app.errorhandler(404)
 def page_404(error):
     """ Return a custom 404 error """
-    return make_response(jsonify({'error': "Not found"}), 404)
+    err_dict = {"error": "Not found"}
+    return jsonify(err_dict), 404
 
 
 if __name__ == "__main__":
