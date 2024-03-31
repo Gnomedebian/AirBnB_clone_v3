@@ -17,6 +17,13 @@ def close_db(error):
     storage.close()
 
 
+@app.errorhandler(404)
+def page_404(error):
+    """ Return a custom 404 error """
+    err_dict = {"error": "Not found"}
+    return jsonify(err_dict), 404
+
+
 if __name__ == "__main__":
     """ Main Function """
     host = environ.get('HBNB_API_HOST')
