@@ -6,10 +6,13 @@ from api.v1.views import app_views
 from flask import jsonify
 from os import environ
 from flask import Flask
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+CORS(app, resources={"/*": {"origins": '0.0.0.0'}})
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
 @app.teardown_appcontext
@@ -21,8 +24,7 @@ def close_db(error):
 @app.errorhandler(404)
 def page_404(error):
     """ Return a custom 404 error """
-    err_dict = {"error": "Not found"}
-    return jsonify(err_dict), 404
+    return make_response(jsonify({'error': "Not found"}), 404)
 
 
 if __name__ == "__main__":
